@@ -13,7 +13,12 @@ export class GrapheComponent {
   // showStopButton = false; // Variable to control the visibility of the Stop button
   // audioContext: AudioContext | null = null;
   // visualizer: AudioVisualizer | null = null;
-
+  // transcription :
+  public currentTranscription: string = '';
+  private allTranscriptions: string[] = [];
+  private silenceTimeout!: any;
+  private silenceDelay = 2000; // 2 seconds of silence
+  private recognition!: any;
 
   constructor() { }
 
@@ -68,7 +73,7 @@ processFrame(data: Uint8Array) {
     // this.showStopButton = true;
     
     // Commencer les transcriptions
-    // this.startTranscriptions();
+    this.startTranscription();
   }
   // stop() {
   //   this.showStopButton = false; // Hide the Stop button
@@ -77,7 +82,50 @@ processFrame(data: Uint8Array) {
   //   console.log('Visualization stopped');
   // }
 
+  startTranscription() {
+    if (!this.recognition) {
+      this.recognition = new (window as any).webkitSpeechRecognition();
+      this.recognition.continuous = true;
+      this.recognition.interimResults = true;
+      this.recognition.lang = 'en-US';
 
+      this.recognition.onresult = (event: any) => {
+        clearTimeout(this.silenceTimeout);
+
+        let interimTranscript = '';
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          const transcript = event.results[i][0].transcript;
+          if (event.results[i].isFinal) {
+            this.addTranscription(transcript);
+          } else {
+            interimTranscript += transcript;
+          }
+        }
+
+        // Mise à jour instantanée de la transcription
+        this.currentTranscription = this.allTranscriptions.join(' ') + ' ' + interimTranscript;
+
+        this.silenceTimeout = setTimeout(() => {
+          this.resetTranscription();
+        }, this.silenceDelay);
+      };
+
+      this.recognition.onerror = (event: any) => {
+        console.error('Speech recognition error detected: ' + event.error);
+      };
+    }
+
+    this.recognition.start();
+  }
+
+  addTranscription(transcript: string) {
+    this.allTranscriptions.push(transcript);
+  }
+
+  resetTranscription() {
+    this.allTranscriptions = [];
+    this.currentTranscription = '';
+  }
   processError() {
     const visualMainElement = document.querySelector('main');
     if (visualMainElement) {
