@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { AudioVisualizerComponent } from './audio-visualizer/audio-visualizer.component';
+import { GrapheComponent } from './graphe/graphe.component';
 
 
 @NgModule({
@@ -12,6 +13,7 @@ import { AudioVisualizerComponent } from './audio-visualizer/audio-visualizer.co
     AppComponent,
     HomeComponent,
     AudioVisualizerComponent,
+    GrapheComponent,
   ],
   imports: [
     BrowserModule,
