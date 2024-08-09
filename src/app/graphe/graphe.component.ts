@@ -10,6 +10,7 @@ export class GrapheComponent {
   visualValueCount = 16;
   transcript = '';
   showButton = true; // Variable to control the visibility of the button
+  showStopButton = false;
   // showStopButton = false; // Variable to control the visibility of the Stop button
   // audioContext: AudioContext | null = null;
   // visualizer: AudioVisualizer | null = null;
@@ -17,37 +18,42 @@ export class GrapheComponent {
   public currentTranscription: string = '';
   private allTranscriptions: string[] = [];
   private silenceTimeout!: any;
-  private silenceDelay = 2000; // 2 seconds of silence
+  private silenceDelay = 3000; // 2 seconds of silence
   private recognition!: any;
+  divsCreated = false;
+  //choix du langues :
+  
 
   constructor() { }
-
   createDOMElements() {
-    const visualMainElement = document.querySelector('main');
-    if (visualMainElement) {
-      for (let i = 0; i < this.visualValueCount; ++i) {
-        const elm = document.createElement('div');
-        // Set the initial styles
-        //elm.style.transform = 'scaleY(.25)';
-        elm.style.display = 'inline-block';
-        elm.style.margin = '0 7px';
-        elm.style.width = '3px'; // Set width
-        elm.style.height = '100px'; // Set initial height
-        elm.style.background = 'currentColor'; // Set background color
-        elm.style.transformOrigin = 'center'; // Set transform origin to center
-        elm.style.opacity =  '.25';
-        elm.style.position = 'relative';
-        elm.style.display = 'flex';
-        elm.style.justifyContent = 'center';
-        elm.style.alignItems = 'center';
-        // Set the initial styles
-
-        visualMainElement.appendChild(elm);
+    if (!this.divsCreated) {
+      const visualMainElement = document.querySelector('main');
+      if (visualMainElement) {
+        for (let i = 0; i < this.visualValueCount; ++i) {
+           const elm = document.createElement('div');
+          // Set the initial styles
+          //elm.style.transform = 'scaleY(.25)';
+          elm.style.display = 'inline-block';
+          elm.style.margin = '0 7px';
+          elm.style.width = '3px'; // Set width
+          elm.style.height = '100px'; // Set initial height
+          elm.style.background = 'currentColor'; // Set background color
+          elm.style.transformOrigin = 'center'; // Set transform origin to center
+          elm.style.opacity =  '.25';
+          elm.style.position = 'relative';
+          elm.style.display = 'flex';
+          elm.style.justifyContent = 'center';
+          elm.style.alignItems = 'center';
+          // Set the initial styles
+  
+          visualMainElement.appendChild(elm);
+        }
+        console.log('Elements created:', visualMainElement.innerHTML);
+        this.visualElements = Array.from(document.querySelectorAll('main div'));
+        this.divsCreated = true; // Marquer les div comme créés
       }
-      console.log('Elements created:', visualMainElement.innerHTML);
-      this.visualElements = Array.from(document.querySelectorAll('main div'));
     }
-}
+  }
 
 processFrame(data: Uint8Array) {
   const dataMap: { [key: number]: number } = { 
@@ -70,8 +76,9 @@ processFrame(data: Uint8Array) {
     const audioContext = new AudioContext();
     const visualizer = new AudioVisualizer(audioContext, (data: Uint8Array) => this.processFrame(data), this.processError);
     this.showButton = false; // Hide the button after starting the visualization
-    // this.showStopButton = true;
+    this.showStopButton = true; // Afficher le bouton stop
     
+      
     // Commencer les transcriptions
     this.startTranscription();
   }
@@ -87,7 +94,7 @@ processFrame(data: Uint8Array) {
       this.recognition = new (window as any).webkitSpeechRecognition();
       this.recognition.continuous = true;
       this.recognition.interimResults = true;
-      this.recognition.lang = 'en-US';
+      this.recognition.lang = 'fr-FR';
 
       this.recognition.onresult = (event: any) => {
         clearTimeout(this.silenceTimeout);
@@ -134,6 +141,13 @@ processFrame(data: Uint8Array) {
     }
   }
 
+  stop() {
+    this.showStopButton = false; // Cacher le bouton stop
+    this.showButton = true; // Réafficher le bouton start
+    this.recognition.stop(); // Arrêter la reconnaissance vocale
+    this.resetTranscription(); // Réinitialiser la transcription
+  }
+    
   // startTranscriptions() {
   //   // Remplacez par vos appels API
   //   fetch('/start_asr')

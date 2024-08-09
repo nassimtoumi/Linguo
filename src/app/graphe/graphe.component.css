@@ -37,6 +37,8 @@ button {
   transition: box-shadow .5s;
 }
 
+
+
 button:hover {
   box-shadow: 0 0 30px 5px rgba(255, 255, 255, 0.75);
 }
@@ -64,13 +66,4 @@ main.error {
   max-width: 30em;
   margin: 0 auto;
   white-space: pre-line;
-}
-
-#transcript {
-  position: fixed;
-  top: 60%;
-  width: 100vw;
-  padding-left: 20vw;
-  padding-right: 20vw;
-  font-size: x-large;
 }
