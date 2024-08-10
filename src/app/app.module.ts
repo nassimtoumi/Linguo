@@ -1,11 +1,14 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms'; // Importer FormsModule
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { AudioVisualizerComponent } from './audio-visualizer/audio-visualizer.component';
 import { GrapheComponent } from './graphe/graphe.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { FooterComponent } from './footer/footer.component';
 
 
 @NgModule({
@@ -14,10 +17,13 @@ import { GrapheComponent } from './graphe/graphe.component';
     HomeComponent,
     AudioVisualizerComponent,
     GrapheComponent,
+    NavbarComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule // Ajouter FormsModule aux imports
   ],
   providers: [],
   bootstrap: [AppComponent]

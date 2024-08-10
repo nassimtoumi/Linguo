@@ -6,6 +6,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./graphe.component.css']
 })
 export class GrapheComponent {
+
+
   visualElements: HTMLElement[] = [];
   visualValueCount = 16;
   transcript = '';
@@ -23,7 +25,20 @@ export class GrapheComponent {
   divsCreated = false;
   //choix du langues :
   
+  langues = [
+    { code: 'ar-TN', nom: 'Arabe (Tunisie)' },
+    { code: 'en-US', nom: 'Anglais (États-Unis)' },
+    { code: 'fr-FR', nom: 'Français (France)' }
+  ];
 
+  langueSelectionnee = this.langues[2].code; // valeur par défaut
+
+  
+  onChangeLangue() {
+    if (this.recognition) {
+      this.recognition.lang = this.langueSelectionnee;
+    }
+  }
   constructor() { }
   createDOMElements() {
     if (!this.divsCreated) {
@@ -94,7 +109,7 @@ processFrame(data: Uint8Array) {
       this.recognition = new (window as any).webkitSpeechRecognition();
       this.recognition.continuous = true;
       this.recognition.interimResults = true;
-      this.recognition.lang = 'fr-FR';
+      this.recognition.lang = this.langueSelectionnee;
 
       this.recognition.onresult = (event: any) => {
         clearTimeout(this.silenceTimeout);
