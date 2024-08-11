@@ -1,0 +1,17 @@
+
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body,
+main {
+  margin: 0;
+  padding: 0;
+  min-width: 100%;
+  min-height: 100vh;
+  font-family: sans-serif;
+  text-align: center;
+  color: #fff;
+  background: #000;
+}

@@ -1,0 +1,8 @@
+#transcript {
+    position: fixed;
+    top: 60%;
+    width: 100vw;
+    padding-left: 20vw;
+    padding-right: 20vw;
+    font-size: x-large;
+  }

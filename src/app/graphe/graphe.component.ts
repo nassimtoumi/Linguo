@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { AudioService } from '../../services/audio.service';
-import { SpeechRecognitionService } from '../../services/speech-recognition.service';
 
 @Component({
   selector: 'app-graphe',
@@ -8,62 +7,64 @@ import { SpeechRecognitionService } from '../../services/speech-recognition.serv
   styleUrls: ['./graphe.component.css']
 })
 export class GrapheComponent {
+
   visualElements: HTMLElement[] = [];
   visualValueCount = 16;
-  currentTranscription: string = '';
-  showButton = true;
-  showStopButton = false;
-  divsCreated = false;
-  langues = [
-    { code: 'ar-TN', nom: 'Arabe (Tunisie)' },
-    { code: 'en-US', nom: 'Anglais (États-Unis)' },
-    { code: 'fr-FR', nom: 'Français (France)' }
-  ];
-  langueSelectionnee = this.langues[2].code;
+  showButton = true; // Variable to control the visibility of the Start button
+  showStopButton = false; // Variable to control the visibility of the Stop button
 
-  constructor(
-    private audioService: AudioService,
-    private speechRecognitionService: SpeechRecognitionService
-  ) { }
+  constructor(private audioService: AudioService) { }
 
   createDOMElements() {
-    if (!this.divsCreated) {
-      this.visualElements = this.audioService.createDOMElements(this.visualValueCount);
-      this.divsCreated = true;
+    if (!this.visualElements.length) {
+      const visualMainElement = document.querySelector('main');
+      if (visualMainElement) {
+        for (let i = 0; i < this.visualValueCount; ++i) {
+          const elm = document.createElement('div');
+          elm.style.display = 'inline-block';
+          elm.style.margin = '0 7px';
+          elm.style.width = '3px';
+          elm.style.height = '100px';
+          elm.style.background = 'currentColor';
+          elm.style.transformOrigin = 'center';
+          elm.style.opacity = '.25';
+          elm.style.position = 'relative';
+          elm.style.display = 'flex';
+          elm.style.justifyContent = 'center';
+          elm.style.alignItems = 'center';
+
+          visualMainElement.appendChild(elm);
+        }
+        this.visualElements = Array.from(document.querySelectorAll('main div'));
+      }
     }
   }
 
   processFrame(data: Uint8Array) {
-    this.audioService.processFrame(data, this.visualElements, this.visualValueCount);
+    const dataMap: { [key: number]: number } = {
+      0: 15, 1: 10, 2: 8, 3: 9, 4: 6, 5: 5, 6: 2, 7: 1, 8: 0, 9: 4,
+      10: 3, 11: 7, 12: 11, 13: 12, 14: 13, 15: 14
+    };
+    const values = Object.values(data);
+    for (let i = 0; i < this.visualValueCount; ++i) {
+      const value = values[dataMap[i]] / 255;
+      const elmStyles = this.visualElements[i].style;
+      elmStyles.transform = `scaleY(${value}) translateY(${(1 - value) * 1}px)`;
+      elmStyles.opacity = Math.max(.25, value).toString();
+    }
   }
 
   init() {
     this.createDOMElements();
-    this.audioService.initVisualizer(data => this.processFrame(data));
+    this.audioService.startVisualization((data: Uint8Array) => this.processFrame(data));
+    this.audioService.startTranscription();; // Start transcription with the selected language
     this.showButton = false;
     this.showStopButton = true;
-    this.startTranscription();
-  }
-
-  onChangeLangue() {
-    this.speechRecognitionService.changeLanguage(this.langueSelectionnee);
-  }
-
-  startTranscription() {
-    this.speechRecognitionService.startTranscription(
-      transcript => this.addTranscription(transcript),
-      currentTranscription => this.currentTranscription = currentTranscription
-    );
-  }
-
-  addTranscription(transcript: string) {
-    this.speechRecognitionService.addTranscription(transcript);
   }
 
   stop() {
-    this.showStopButton = false;
+    this.audioService.stopVisualization();
     this.showButton = true;
-    this.speechRecognitionService.stopTranscription();
-    this.currentTranscription = '';
+    this.showStopButton = false;
   }
 }

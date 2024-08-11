@@ -1,58 +1,94 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AudioService {
-  createDOMElements(visualValueCount: number): HTMLElement[] {
-    const visualMainElement = document.querySelector('main');
-    const elements: HTMLElement[] = [];
-    if (visualMainElement) {
-      for (let i = 0; i < visualValueCount; ++i) {
-        const elm = document.createElement('div');
-        elm.style.display = 'inline-block';
-        elm.style.margin = '0 7px';
-        elm.style.width = '3px';
-        elm.style.height = '100px';
-        elm.style.background = 'currentColor';
-        elm.style.transformOrigin = 'center';
-        elm.style.opacity = '.25';
-        elm.style.position = 'relative';
-        elm.style.display = 'flex';
-        elm.style.justifyContent = 'center';
-        elm.style.alignItems = 'center';
-        visualMainElement.appendChild(elm);
-        elements.push(elm);
-      }
-    }
-    return elements;
-  }
 
-  processFrame(data: Uint8Array, visualElements: HTMLElement[], visualValueCount: number) {
-    const dataMap: { [key: number]: number } = {
-      0: 15, 1: 10, 2: 8, 3: 9, 4: 6, 5: 5, 6: 2, 7: 1, 8: 0, 9: 4,
-      10: 3, 11: 7, 12: 11, 13: 12, 14: 13, 15: 14
-    };
-    const values = Object.values(data);
-    for (let i = 0; i < visualValueCount; ++i) {
-      const value = values[dataMap[i]] / 255;
-      const elmStyles = visualElements[i].style;
-      elmStyles.transform = `scaleY(${value}) translateY(${(1 - value) * 1}px)`;
-      elmStyles.opacity = Math.max(.25, value).toString();
+  private recognition: any;
+  private audioContext: AudioContext | null = null;
+  private visualizer: any = null;
+  private langueSelectionnee: string = 'fr-FR'; // Default language
+  private silenceTimeout!: any; // Timeout for clearing transcription after silence
+  private silenceDelay = 3000; // 3 seconds of silence
+  private allTranscriptions: string[] = []; // Array to store all finalized transcriptions
+
+  currentTranscription = ''; // Current interim transcription
+  transcriptionUpdated = new EventEmitter<string>(); // Event for when transcription is updated
+
+  setLanguage(langueSelectionnee: string) {
+    this.langueSelectionnee = langueSelectionnee;
+    if (this.recognition) {
+      this.recognition.lang = langueSelectionnee;
     }
   }
 
-  initVisualizer(processFrame: (data: Uint8Array) => void) {
-    const audioContext = new AudioContext();
-    new AudioVisualizer(audioContext, processFrame, this.processError);
+  getLanguage() {
+    return this.langueSelectionnee;
   }
 
-  processError() {
-    const visualMainElement = document.querySelector('main');
-    if (visualMainElement) {
-      visualMainElement.classList.add('error');
-      visualMainElement.innerText = 'Please allow access to your microphone in order to see this demo.';
+  startVisualization(processFrame: (data: Uint8Array) => void) {
+    this.audioContext = new AudioContext();
+    this.visualizer = new AudioVisualizer(this.audioContext, processFrame, this.processError);
+  }
+
+  stopVisualization() {
+    if (this.recognition) {
+      this.recognition.stop();
     }
+    this.resetTranscription();
+  }
+
+  startTranscription() {
+    if (!this.recognition) {
+      this.recognition = new (window as any).webkitSpeechRecognition();
+      this.recognition.continuous = true;
+      this.recognition.interimResults = true;
+      this.recognition.lang = this.langueSelectionnee;
+
+      this.recognition.onresult = (event: any) => {
+        clearTimeout(this.silenceTimeout); // Clear previous timeout
+
+        let interimTranscript = '';
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          const transcript = event.results[i][0].transcript;
+          if (event.results[i].isFinal) {
+            this.addTranscription(transcript);
+          } else {
+            interimTranscript += transcript;
+          }
+        }
+
+        // Update current transcription with interim results and all finalized transcriptions
+        this.currentTranscription = this.allTranscriptions.join(' ') + ' ' + interimTranscript;
+        this.transcriptionUpdated.emit(this.currentTranscription); // Emit the current transcription
+
+        // Set timeout to clear the transcription after silence
+        this.silenceTimeout = setTimeout(() => {
+          this.resetTranscription();
+        }, this.silenceDelay);
+      };
+
+      this.recognition.onerror = (event: any) => {
+        console.error('Speech recognition error detected: ' + event.error);
+      };
+    }
+
+    this.recognition.start();
+  }
+
+  addTranscription(transcript: string) {
+    this.allTranscriptions.push(transcript);
+  }
+
+  resetTranscription() {
+    this.allTranscriptions = [];
+    this.currentTranscription = '';
+    this.transcriptionUpdated.emit(this.currentTranscription); // Clear the transcription
+  }
+
+  private processError() {
+    console.error('Microphone access error.');
   }
 }
 

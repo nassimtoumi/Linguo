@@ -9,6 +9,8 @@ import { AudioVisualizerComponent } from './audio-visualizer/audio-visualizer.co
 import { GrapheComponent } from './graphe/graphe.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
+import { TranscriptionComponent } from './transcription/transcription.component';
+import { LanguageSelectComponent } from './language-select/language-select.component';
 
 
 @NgModule({
@@ -19,6 +21,8 @@ import { FooterComponent } from './footer/footer.component';
     GrapheComponent,
     NavbarComponent,
     FooterComponent,
+    TranscriptionComponent,
+    LanguageSelectComponent,
   ],
   imports: [
     BrowserModule,
