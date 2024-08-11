@@ -10,7 +10,7 @@ export class AudioService {
   private visualizer: any = null;
   private langueSelectionnee: string = 'fr-FR'; // Default language
   private silenceTimeout!: any; // Timeout for clearing transcription after silence
-  private silenceDelay = 3000; // 3 seconds of silence
+  private silenceDelay = 1500; // 3 seconds of silence
   private allTranscriptions: string[] = []; // Array to store all finalized transcriptions
 
   currentTranscription = ''; // Current interim transcription
