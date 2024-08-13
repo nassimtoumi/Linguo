@@ -29,7 +29,7 @@ export class GrapheComponent implements OnInit {
           elm.style.display = 'inline-block';
           elm.style.margin = '0 7px';
           elm.style.width = '3px';
-          elm.style.height = '100px';
+          elm.style.height = '75px';
           elm.style.background = 'currentColor';
           elm.style.transformOrigin = 'center';
           elm.style.opacity = '.25';

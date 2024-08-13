@@ -8,23 +8,30 @@
     
     <!-- Background Image -->
 <div class="absolute  h-[100%] w-[100%]  right-0 bottom-0 bg-no-repeat opacity-40 bg-right bg-contain" style="background-image: url('../../assets/img/2ecb8a4292885d97a4ab33999d173fe7.jpg');"></div>
+<div class="flex flex-col">
+    <h2 class=" mb-20 text-3xl text-center font-semibold text-white"> Welcome to my website! <br>
+        In the heart of the wild, I speak the language of men but carry the soul of a wolf . </h2>
+        <div class="container max-w-md mx-auto p-4 bg-transparent rounded-lg shadow-lg z-10">
     
-    <div class="container max-w-md mx-auto p-4 bg-transparent rounded-lg shadow-lg z-10">
-        <div class="text-center mb-4">
-            <img src="../../assets/img/LinguoLogob.png" alt="Linguo Logo" class="mb-7 w-40 h-32 mx-auto">
-            <h2 class="mb-20 text-3xl font-semibold text-white">Linguo</h2>
-    </div>
-        <div class="left-3/4 top-3/4">
-            <app-language-select></app-language-select>
+            <div class="text-center mb-4">
+                <img src="../../assets/img/LinguoLogob.png" alt="Linguo Logo" class="mb-2 opacity-30 w-20 h-20 mx-auto">
+                <h2 class="mb-20 text-3xl font-semibold text-white">Linguo</h2>
+                <div class="left-3/4 top-3/4">
+                    <app-language-select></app-language-select>
+                </div>
+                <div class="">   
+                     <app-graphe>
+                        <main></main>
+                     </app-graphe>
+                </div>
+                <div>
+                    <app-transcription></app-transcription>
+                </div> 
         </div>
-        <div class="">   
-             <app-graphe>
-                <main></main>
-             </app-graphe>
-        </div>
-        <div>
-            <app-transcription></app-transcription>
-        </div> 
+</div>
+
+   
+        
     
 </div>
 
