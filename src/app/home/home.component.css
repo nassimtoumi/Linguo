@@ -1,5 +1,5 @@
 
-*::before,
+/* *::before,
 *::after {
   box-sizing: border-box;
 }
@@ -14,4 +14,4 @@ main {
   text-align: center;
   color: #fff;
   background: #000;
-}
+} */
