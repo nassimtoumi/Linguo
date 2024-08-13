@@ -9,11 +9,11 @@ main {
   margin: 0;
   padding: 0;
   min-width: 100%;
-  min-height: 100vh;
+  min-height: 20px;
   font-family: sans-serif;
   text-align: center;
   color: #fff;
-  background: #000;
+  background: transparent;
 }
 
 button {
@@ -36,9 +36,11 @@ button {
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
   transition: box-shadow .5s;
 }
-
-
-
+.custom-div{
+  position: absolute;
+  top: 85%;
+  left: 50%;
+}
 button:hover {
   box-shadow: 0 0 30px 5px rgba(255, 255, 255, 0.75);
 }
