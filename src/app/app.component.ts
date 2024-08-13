@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -18,7 +19,7 @@ export class AppComponent implements OnInit{
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         // Hide navbar and footer on login and sign-in pages
-        this.showHeaderFooter = !(event.url === '/login' || event.url === '/signUp');
+        this.showHeaderFooter = !(event.url === '/login' || event.url === '/signUp' || event.url === '/');
       }
     });
   }
