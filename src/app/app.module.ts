@@ -10,6 +10,7 @@ import { FooterComponent } from './footer/footer.component';
 import { TranscriptionComponent } from './transcription/transcription.component';
 import { LanguageSelectComponent } from './language-select/language-select.component';
 import { LoginComponent } from './login/login.component';
+import { SignUpComponent } from './sign-up/sign-up.component';
 
 
 
@@ -23,6 +24,7 @@ import { LoginComponent } from './login/login.component';
     TranscriptionComponent,
     LanguageSelectComponent,
     LoginComponent,
+    SignUpComponent,
   ],
   imports: [
     BrowserModule,
