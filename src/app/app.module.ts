@@ -11,6 +11,8 @@ import { TranscriptionComponent } from './transcription/transcription.component'
 import { LanguageSelectComponent } from './language-select/language-select.component';
 import { LoginComponent } from './login/login.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
+import { TtsComponent } from './tts/tts.component';
+import { TtsService } from '../services/tts.service';
 
 
 
@@ -25,6 +27,7 @@ import { SignUpComponent } from './sign-up/sign-up.component';
     LanguageSelectComponent,
     LoginComponent,
     SignUpComponent,
+    TtsComponent,
   ],
   imports: [
     BrowserModule,
