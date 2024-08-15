@@ -18,6 +18,8 @@ import { SttComponent } from './stt/stt.component';
 import { NerComponent } from './ner/ner.component';
 import { PonctuationComponent } from './ponctuation/ponctuation.component';
 import { EmotionComponent } from './emotion/emotion.component';
+import { AboutComponent } from './about/about.component';
+import { ComboComponent } from './combo/combo.component';
 
 
 @NgModule({
@@ -36,6 +38,8 @@ import { EmotionComponent } from './emotion/emotion.component';
     NerComponent,
     PonctuationComponent,
     EmotionComponent,
+    AboutComponent,
+    ComboComponent,
   ],
   imports: [
     BrowserModule,

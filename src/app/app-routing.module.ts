@@ -9,6 +9,8 @@ import { SttComponent } from './stt/stt.component';
 import { NerComponent } from './ner/ner.component';
 import { EmotionComponent } from './emotion/emotion.component';
 import { PonctuationComponent } from './ponctuation/ponctuation.component';
+import { ComboComponent } from './combo/combo.component';
+import { AboutComponent } from './about/about.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -19,6 +21,8 @@ const routes: Routes = [
   { path: 'ner', component: NerComponent },
   { path: 'emotion', component: EmotionComponent },
   { path: 'punctuation', component: PonctuationComponent },
+  { path: 'about', component: AboutComponent },
+  { path: 'combo', component: ComboComponent },
   { path: 'stt', component: SttComponent }
 ];
 
