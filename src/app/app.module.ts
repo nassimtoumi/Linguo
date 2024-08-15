@@ -13,7 +13,11 @@ import { LoginComponent } from './login/login.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { TtsComponent } from './tts/tts.component';
 import { TtsService } from '../services/tts.service';
-
+import { HttpClientModule } from '@angular/common/http';
+import { SttComponent } from './stt/stt.component';
+import { NerComponent } from './ner/ner.component';
+import { PonctuationComponent } from './ponctuation/ponctuation.component';
+import { EmotionComponent } from './emotion/emotion.component';
 
 
 @NgModule({
@@ -28,12 +32,17 @@ import { TtsService } from '../services/tts.service';
     LoginComponent,
     SignUpComponent,
     TtsComponent,
+    SttComponent,
+    NerComponent,
+    PonctuationComponent,
+    EmotionComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule, // Ajouter FormsModule aux imports
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

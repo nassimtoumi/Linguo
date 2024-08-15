@@ -1,0 +1,25 @@
+<div class="h-screen bg-black flex justify-center items-center">
+    <div class="fixed   h-[100%] w-[100%]  right-0 bottom-0 bg-no-repeat opacity-40 bg-right bg-contain" style="background-image: url('../../assets/img/2ecb8a4292885d97a4ab33999d173fe7.jpg');"></div>
+    <div class="container max-w-md mx-auto p-4 bg-transparent rounded-lg shadow-lg">
+        <div class="text-center mb-4">
+          <img src="../../assets/img/LinguoLogob.png" alt="Linguo Logo" class="mb-2 opacity-30 w-20 h-20 mx-auto">
+        <h2 class="text-3xl font-bold text-white">Text Punctuation</h2>
+      </div>
+      <form (ngSubmit)="onSubmit()">
+        <div class="form-group mb-4">
+          <label for="textInput" class="block text-white text-sm font-bold mb-2">Enter Text:</label>
+          <textarea [(ngModel)]="inputText" id="textInput" placeholder="Enter text here..." rows="5" class="w-full p-2 bg-transparent text-white border border-white rounded-lg focus:outline-none focus:ring focus:border-blue-500"></textarea>
+        </div>
+        <div class="text-center">
+          <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:ring focus:border-blue-500">
+            Punctuate Text
+          </button>
+        </div>
+      </form>
+      <div *ngIf="punctuatedText" class="text-center mt-4 text-white">
+        <p>Punctuated Text:</p>
+        <pre>{{ punctuatedText }}</pre>
+      </div>
+    </div>
+  </div>
+  

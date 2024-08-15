@@ -1,28 +1,33 @@
-<div class="container mx-auto p-4">
-    <h1 class="text-2xl font-bold mb-4">Text-to-Speech Example</h1>
-    
-    <textarea [(ngModel)]="inputText" placeholder="Enter text here..." rows="5" class="w-full p-2 border mb-4"></textarea>
-    
-    <div class="mb-4">
-      <label for="languageSelect" class="block mb-2">Select Language:</label>
-      <select [(ngModel)]="selectedLanguage" (change)="onLanguageChange()" id="languageSelect" class="w-full p-2 border">
+<div class="h-screen bg-black flex justify-center items-center relative">
+  <!-- Background Image -->
+  <div class="fixed h-[100%] w-[100%] right-0 bottom-0 bg-no-repeat opacity-40 bg-right bg-contain" style="background-image: url('../../assets/img/2ecb8a4292885d97a4ab33999d173fe7.jpg'); z-index: -1;"></div>
+  <div class="container max-w-md mx-auto p-4 bg-transparent rounded-lg shadow-lg">
+    <div class="text-center mb-4">
+      <img src="../../assets/img/LinguoLogob.png" alt="Linguo Logo" class="mb-2 opacity-30 w-20 h-20 mx-auto">
+      <h2 class="text-3xl font-bold text-white">Text-to-Speech</h2>
+    </div>
+    <div class="form-group mb-4">
+      <textarea [(ngModel)]="inputText" placeholder="Enter text here..." rows="5" class="w-full p-2 text-white bg-transparent border border-white rounded-lg focus:outline-none focus:ring focus:border-blue-500 mb-4"></textarea>
+    </div>
+    <div class="form-group mb-4">
+      <label for="languageSelect" class="block text-white text-sm font-bold mb-2">Select Language:</label>
+      <select [(ngModel)]="selectedLanguage" (change)="onLanguageChange()" id="languageSelect" class="block w-full p-2 bg-transparent text-white border border-white rounded-lg focus:outline-none focus:ring focus:border-blue-500">
         <option *ngFor="let lang of languages" [value]="lang">
           {{ lang }}
         </option>
       </select>
     </div>
-    
-    <div class="mb-4">
-      <label for="voiceSelect" class="block mb-2">Select Voice:</label>
-      <select [(ngModel)]="selectedVoice" id="voiceSelect" class="w-full p-2 border">
-        <option *ngFor="let voice of availableVoices" [value]="voice.name">
-          {{ voice.name }} ({{ voice.lang }})
-        </option>
-      </select>
+    <div class="form-group mb-4">
+      <label for="voiceUpload" class="block text-white text-sm font-bold mb-2">Upload Voice Sample:</label>
+      <input type="file" (change)="onFileSelected($event)" id="voiceUpload" class="block w-full p-2 bg-transparent text-white border border-white rounded-lg focus:outline-none focus:ring focus:border-blue-500">
     </div>
-    
-    <button (click)="generateSpeech()" class="bg-blue-500 text-white px-4 py-2 rounded">
-      Speak
-    </button>
+    <div class="text-center">
+      <button (click)="generateSpeech()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:ring focus:border-blue-500">
+        Speak
+      </button>
+    </div>
+    <div *ngIf="audioUrl" class="text-center mt-4">
+      <a [href]="audioUrl" download class="text-blue-500 hover:text-blue-700">Download Generated Speech</a>
+    </div>
   </div>
-  
+</div>
