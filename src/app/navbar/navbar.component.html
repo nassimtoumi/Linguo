@@ -5,17 +5,26 @@
         <img class="h-5 w-auto" src="../../assets/img/LinguoNavBar.png" alt="Linguo Logo" style="width: 100px; height: auto;">
       </a>
     </div>
-    <div class="flex lg:hidden">
-      <button type="button" class="-m-2 inline-flex items-center justify-center rounded-md p-2 text-gray-700">
-        <span class="sr-only">Open main menu</span>
-        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-        </svg>
-      </button>
-    </div>
-    <div class="hidden lg:flex lg:gap-x-6">
+    <div class="hidden lg:flex lg:gap-x-6 items-center">
       <a href="/home" class="text-xs font-semibold leading-4 text-gray-900">Home</a>
-      <a href="/home" class="text-xs font-semibold leading-4 text-gray-900">Models</a>
+
+      <!-- Dropdown for Models -->
+      <div class="relative group">
+        <span class="text-xs font-semibold leading-4 text-gray-900 inline-flex items-center cursor-pointer">
+          Models
+          <!-- Dropdown Icon -->
+          <svg class="ml-1 h-4 w-4 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        </span>
+
+        <div class="absolute left-0 mt-2 w-40 bg-white border border-gray-200 rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
+          <a href="/stt" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">STT</a>
+          <a href="/tts" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">TTS</a>
+          <a href="/ner" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">NER</a>
+          <a href="/emotion" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Emotion</a>
+          <a href="/punctuation" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Punctuation</a>
+        </div>
+      </div>
+
       <a href="/combo" class="text-xs font-semibold leading-4 text-gray-900">Your Composition</a>
       <a href="/about" class="text-xs font-semibold leading-4 text-gray-900">About Us</a>
     </div>
@@ -24,5 +33,3 @@
     </div>
   </nav>
 </header>
-
-
