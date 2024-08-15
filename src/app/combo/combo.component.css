@@ -1,0 +1,11 @@
+.example-list {
+    display: flex;
+  }
+  
+  .example-box {
+    padding: 8px;
+    margin: 4px;
+    background-color: #f1f1f1;
+    border: 1px solid #ccc;
+    cursor: move;
+  }

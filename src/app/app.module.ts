@@ -20,7 +20,7 @@ import { PonctuationComponent } from './ponctuation/ponctuation.component';
 import { EmotionComponent } from './emotion/emotion.component';
 import { AboutComponent } from './about/about.component';
 import { ComboComponent } from './combo/combo.component';
-
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -46,7 +46,8 @@ import { ComboComponent } from './combo/combo.component';
     AppRoutingModule,
     FormsModule, // Ajouter FormsModule aux imports
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    DragDropModule
   ],
   providers: [],
   bootstrap: [AppComponent]
