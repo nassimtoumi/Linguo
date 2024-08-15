@@ -1,11 +1,25 @@
-.example-list {
+.example-container {
     display: flex;
+    flex-direction: column;
+    margin: 0 20px;
+  }
+  
+  .example-list {
+    border: 0px solid #ccc;
+    min-height: 20px;
+    min-width : 150px;
+    background: #000000;
+    padding: 8px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
   }
   
   .example-box {
-    padding: 8px;
-    margin: 4px;
-    background-color: #f1f1f1;
+    padding: 10px;
+    color: aliceblue;
     border: 1px solid #ccc;
+    background-color: black;
     cursor: move;
   }
+  
